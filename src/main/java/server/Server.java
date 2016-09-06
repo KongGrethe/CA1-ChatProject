@@ -48,8 +48,8 @@ public class Server {
                 Socket socket = serverSocket.accept();
                 System.out.println("Connected to a client");
 
-                clientHandler cH = new clientHandler(socket);
-                clients.add(cH);
+                clientHandler cH = new clientHandler(socket, this);
+                addClient(cH);
                 cH.start();
                 //handleClient(socket);
             }
@@ -60,10 +60,14 @@ public class Server {
 
     public void addClient(clientHandler client) {
         clients.add(client);
+        System.out.println("A user has joined!");
+        System.out.println("Total number of users is: " + clients.size());
     }
-
+    
     public void removeClient(clientHandler client) {
         clients.remove(client);
+        System.out.println("A user has left!");
+        System.out.println("Total number of users is: " + clients.size());
     }
-
+    
 }

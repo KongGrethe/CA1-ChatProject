@@ -50,6 +50,8 @@ public class clientHandler extends Thread {
             System.out.println("oh no");
         } catch (NoSuchElementException e2) {
             System.out.println("Client closed window probably");
+            server.removeClient(this);
+            
         } finally {
             try {
                 socket.close();
