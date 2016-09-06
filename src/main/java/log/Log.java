@@ -1,5 +1,5 @@
 package log;
 
-public class log {
+public class Log {
     
 }

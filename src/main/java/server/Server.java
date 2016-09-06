@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class server {
+public class Server {
 
     private static boolean keepRunning = true;
     private static ServerSocket serverSocket;
@@ -20,8 +20,14 @@ public class server {
                 throw new IllegalArgumentException("Use like java -jar file.jar <ip> <port>");
             }
             String ip = args[0];
+<<<<<<< HEAD:src/main/java/server/server.java
             int port = Integer.parseInt(args[1]);*/
             new server().runServer("localhost", 7777); // starter serveren
+=======
+            int port = Integer.parseInt(args[1]);
+
+            new Server().runServer(ip, port); // starter serveren
+>>>>>>> 44011fc38ab4dd02ea08c902bac103a1d9af6d03:src/main/java/server/Server.java
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
