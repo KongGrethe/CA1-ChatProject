@@ -46,26 +46,16 @@ public class Server {
             while (keepRunning) {
                 Socket socket = serverSocket.accept();
                 System.out.println("Connected to a client");
-                handleClient(socket);
+                
+                clientHandler cH = new clientHandler(socket);
+                cH.start();
+                //handleClient(socket);
             }
         } catch (IOException ex) {
             System.out.println(ex.getLocalizedMessage());
         }
     }
+   
 
-    private static void handleClient(Socket socket) throws IOException {
-        PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-        Scanner input = new Scanner(socket.getInputStream());
-        writer.println("Welcome to the best server ever");
-        String message = input.nextLine(); // Blocker
-
-        while(!message.equals("##STOP##")) {
-            writer.println(message.toUpperCase());
-            message = input.nextLine();
-            
-        }
-        writer.println("##STOP##");
-        socket.close();
-        System.out.println("Closed connection");
-    }
+    
 }
