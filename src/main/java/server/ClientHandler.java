@@ -59,7 +59,7 @@ public class ClientHandler extends Thread {
                     
                 } catch (ArrayIndexOutOfBoundsException ex) {
                     System.out.println(ex.getMessage());
-                    writer.println("The protocol is: <recipients>:<message> \n"
+                    writer.println("The protocol is: <recipients seperated by , or blank for all>:<message> \n"
                             + "Example: Lars,Jens,Mats:Hej med jer");
                 }
             }
