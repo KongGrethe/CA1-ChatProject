@@ -70,4 +70,15 @@ public class Server {
         System.out.println("Total number of users is: " + clients.size());
     }
     
+    public void sendToAllClients(String text) {
+        for (ClientHandler client : clients) {
+            client.sendMessage(text);
+        }
+    }
+    
+    public void sendSpecific(String[] receivers, String text){
+        for (String username : receivers) {
+            
+        }
+    }
 }

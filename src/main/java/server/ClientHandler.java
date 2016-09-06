@@ -38,6 +38,10 @@ public class ClientHandler extends Thread {
             input = new Scanner(socket.getInputStream());
             writer.println("Welcome to the best server ever");
             message = input.nextLine(); // Blocker
+            String[] parts = message.split(":");
+            String[] recipients = parts[0].split(",");
+            String text = parts[1];
+            
 
             while (!message.equals("##STOP##")) {
                 writer.println(message.toUpperCase());
@@ -59,6 +63,12 @@ public class ClientHandler extends Thread {
                 System.out.println("Deep shit");
             }
         }
+    }
+    
+    public void sendMessage(String msg) {
+        writer.println(msg);
+        writer.flush();
+        System.out.println("Send message!");
     }
 
 }
