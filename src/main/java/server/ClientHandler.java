@@ -10,8 +10,6 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -23,12 +21,14 @@ public class ClientHandler extends Thread {
     private PrintWriter writer;
     private Scanner input;
     private String message;
-    private Server server; 
-    
+    private Server server;
+    private boolean virgin;
+    private String username;
+
     public ClientHandler(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;
-        
+        virgin = true;
     }
 
     @Override
@@ -36,16 +36,32 @@ public class ClientHandler extends Thread {
         try {
             writer = new PrintWriter(socket.getOutputStream(), true);
             input = new Scanner(socket.getInputStream());
-            writer.println("Welcome to the best server ever");
-            message = input.nextLine(); // Blocker
-            String[] parts = message.split(":");
-            String[] recipients = parts[0].split(",");
-            String text = parts[1];
-            
+            writer.println("Hi my name is Athena. What is your name?");
 
+            if (virgin) {
+                setUserName();
+            }
+            message = input.nextLine(); // Blocker
             while (!message.equals("##STOP##")) {
-                writer.println(message.toUpperCase());
-                message = input.nextLine();
+                try {
+                    message = input.nextLine(); // Blocker
+                    String[] parts = message.split(":");
+                    String[] recipients = parts[0].split(",");
+                    String text = parts[1];
+                    
+                    if (recipients[0].equals("")) {
+                        // Send to all clients
+                        server.sendToAllClients(text);
+                    } else {
+                        // Send to 1 or more clients
+                        server.sendSpecific(recipients, text);
+                    }
+                    
+                } catch (ArrayIndexOutOfBoundsException ex) {
+                    System.out.println(ex.getMessage());
+                    writer.println("The protocol is: <recipients>:<message> \n"
+                            + "Example: Lars,Jens,Mats:Hej med jer");
+                }
             }
             writer.println("##STOP##");
             socket.close();
@@ -55,7 +71,7 @@ public class ClientHandler extends Thread {
         } catch (NoSuchElementException e2) {
             System.out.println("Client closed window probably");
             server.removeClient(this);
-            
+
         } finally {
             try {
                 socket.close();
@@ -64,11 +80,19 @@ public class ClientHandler extends Thread {
             }
         }
     }
-    
+
     public void sendMessage(String msg) {
         writer.println(msg);
         writer.flush();
         System.out.println("Send message!");
+    }
+
+    private void setUserName() {
+        username = input.nextLine();
+    }
+
+    public String getUserName() {
+        return username;
     }
 
 }

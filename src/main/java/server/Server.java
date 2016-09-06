@@ -23,7 +23,6 @@ public class Server {
             String ip = args[0];
             int port = Integer.parseInt(args[1]);*/
             new Server().runServer("localhost", 7777); // starter serveren
-            int port = Integer.parseInt(args[1]);
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -77,8 +76,12 @@ public class Server {
     }
     
     public void sendSpecific(String[] receivers, String text){
-        for (String username : receivers) {
-            
+        for (ClientHandler client : clients) {
+            for (String receiver : receivers) {
+                if (client.getUserName().equals(receiver)) {
+                    client.sendMessage(text);
+                }
+            }
         }
     }
 }
