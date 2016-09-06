@@ -7,7 +7,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class server {
+public class Server {
 
     private static boolean keepRunning = true;
     private static ServerSocket serverSocket;
@@ -22,7 +22,7 @@ public class server {
             String ip = args[0];
             int port = Integer.parseInt(args[1]);
 
-            new server().runServer(ip, port); // starter serveren
+            new Server().runServer(ip, port); // starter serveren
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
