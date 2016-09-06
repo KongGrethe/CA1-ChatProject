@@ -14,6 +14,7 @@ public class Server {
     private String myIP;
     private int myPort;
     private ArrayList<ClientHandler> clients = new ArrayList<>();
+    private final String serverName = "Athena";
 
     public static void main(String[] args) {
         try {
@@ -83,5 +84,13 @@ public class Server {
                 }
             }
         }
+    }
+    
+    public String getServerGreeting() {
+        return "Hi my name is " + serverName + ". What is your name?";
+    }
+    
+    public String getSuccessMsg(String toUser) {
+        return "Hi " + toUser + ". You are now connected. Start chatting";
     }
 }

@@ -36,13 +36,10 @@ public class ClientHandler extends Thread {
         try {
             writer = new PrintWriter(socket.getOutputStream(), true);
             input = new Scanner(socket.getInputStream());
-            writer.println("Hi my name is Athena. What is your name?");
-
-            if (virgin) {
-                setUserName();
-            }
-            message = input.nextLine(); // Blocker
-            while (!message.equals("##STOP##")) {
+            writer.println(server.getServerGreeting());
+            setUserName();
+            writer.println(server.getSuccessMsg(username));
+            while (!message.equals("#EXIT#")) {
                 try {
                     message = input.nextLine(); // Blocker
                     String[] parts = message.split(":");
@@ -63,7 +60,7 @@ public class ClientHandler extends Thread {
                             + "Example: Lars,Jens,Mats:Hej med jer");
                 }
             }
-            writer.println("##STOP##");
+            writer.println("#EXIT#");
             socket.close();
             System.out.println("Closed connection");
         } catch (IOException e) {
@@ -88,11 +85,11 @@ public class ClientHandler extends Thread {
     }
 
     private void setUserName() {
-        username = input.nextLine();
+        username = message = input.nextLine();
     }
 
     public String getUserName() {
         return username;
     }
-
+    
 }
