@@ -16,13 +16,12 @@ public class server {
 
     public static void main(String[] args) {
         try {
-            if (args.length != 2) {
+            /*if (args.length != 2) {
                 throw new IllegalArgumentException("Use like java -jar file.jar <ip> <port>");
             }
             String ip = args[0];
-            int port = Integer.parseInt(args[1]);
-
-            new server().runServer(ip, port); // starter serveren
+            int port = Integer.parseInt(args[1]);*/
+            new server().runServer("localhost", 7777); // starter serveren
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -38,7 +37,7 @@ public class server {
 
         try {
             serverSocket = new ServerSocket();
-            serverSocket.bind(new InetSocketAddress(ip, port));
+            serverSocket.bind(new InetSocketAddress(myIP, myPort));
 
             System.out.println("Server listens on " + myPort + " at " + myIP);
 
@@ -53,13 +52,15 @@ public class server {
     }
 
     private static void handleClient(Socket socket) throws IOException {
-        Scanner input = new Scanner(socket.getInputStream());
         PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
-
+        Scanner input = new Scanner(socket.getInputStream());
+        writer.println("Welcome to the best server ever");
         String message = input.nextLine(); // Blocker
+
         while(!message.equals("##STOP##")) {
             writer.println(message.toUpperCase());
             message = input.nextLine();
+            
         }
         writer.println("##STOP##");
         socket.close();
