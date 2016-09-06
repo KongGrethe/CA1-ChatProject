@@ -91,6 +91,14 @@ public class Server {
     }
     
     public String getSuccessMsg(String toUser) {
-        return "Hi " + toUser + ". You are now connected. Start chatting";
+        return "Hi " + toUser + ". You are now connected.";
+    }
+    
+    public String getClientList() {
+        String clientList = "The following users are online: ";
+        for (ClientHandler client : clients) {
+            clientList += client.getUserName() + ", ";
+        }
+        return clientList;
     }
 }

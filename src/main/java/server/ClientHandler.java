@@ -39,6 +39,7 @@ public class ClientHandler extends Thread {
             writer.println(server.getServerGreeting());
             setUserName();
             writer.println(server.getSuccessMsg(username));
+            writer.println(server.getClientList());
             while (!message.equals("#EXIT#")) {
                 try {
                     message = input.nextLine(); // Blocker
