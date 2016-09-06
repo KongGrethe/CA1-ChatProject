@@ -5,7 +5,7 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Server {
 
@@ -13,6 +13,7 @@ public class Server {
     private static ServerSocket serverSocket;
     private String myIP;
     private int myPort;
+    private ArrayList<clientHandler> clients = new ArrayList<>();
 
     public static void main(String[] args) {
         try {
@@ -23,7 +24,7 @@ public class Server {
             int port = Integer.parseInt(args[1]);*/
             new Server().runServer("localhost", 7777); // starter serveren
             int port = Integer.parseInt(args[1]);
-            
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -46,8 +47,9 @@ public class Server {
             while (keepRunning) {
                 Socket socket = serverSocket.accept();
                 System.out.println("Connected to a client");
-                
+
                 clientHandler cH = new clientHandler(socket);
+                clients.add(cH);
                 cH.start();
                 //handleClient(socket);
             }
@@ -55,7 +57,13 @@ public class Server {
             System.out.println(ex.getLocalizedMessage());
         }
     }
-   
 
-    
+    public void addClient(clientHandler client) {
+        clients.add(client);
+    }
+
+    public void removeClient(clientHandler client) {
+        clients.remove(client);
+    }
+
 }

@@ -19,13 +19,16 @@ import java.util.logging.Logger;
  */
 public class clientHandler extends Thread {
 
-    Socket socket;
-    PrintWriter writer;
-    Scanner input;
-    String message;
-
-    public clientHandler(Socket socket) {
+    private Socket socket;
+    private PrintWriter writer;
+    private Scanner input;
+    private String message;
+    private Server server; 
+    
+    public clientHandler(Socket socket, Server server) {
         this.socket = socket;
+        this.server = server;
+        
     }
 
     @Override
@@ -39,7 +42,6 @@ public class clientHandler extends Thread {
             while (!message.equals("##STOP##")) {
                 writer.println(message.toUpperCase());
                 message = input.nextLine();
-
             }
             writer.println("##STOP##");
             socket.close();
