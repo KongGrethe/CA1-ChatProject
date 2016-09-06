@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author Lasse
  */
-public class clientHandler extends Thread {
+public class ClientHandler extends Thread {
 
     private Socket socket;
     private PrintWriter writer;
@@ -25,7 +25,7 @@ public class clientHandler extends Thread {
     private String message;
     private Server server; 
     
-    public clientHandler(Socket socket, Server server) {
+    public ClientHandler(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;
         

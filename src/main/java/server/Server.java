@@ -13,7 +13,7 @@ public class Server {
     private static ServerSocket serverSocket;
     private String myIP;
     private int myPort;
-    private ArrayList<clientHandler> clients = new ArrayList<>();
+    private ArrayList<ClientHandler> clients = new ArrayList<>();
 
     public static void main(String[] args) {
         try {
@@ -48,7 +48,7 @@ public class Server {
                 Socket socket = serverSocket.accept();
                 System.out.println("Connected to a client");
 
-                clientHandler cH = new clientHandler(socket, this);
+                ClientHandler cH = new ClientHandler(socket, this);
                 addClient(cH);
                 cH.start();
                 //handleClient(socket);
@@ -58,13 +58,13 @@ public class Server {
         }
     }
 
-    public void addClient(clientHandler client) {
+    public void addClient(ClientHandler client) {
         clients.add(client);
         System.out.println("A user has joined!");
         System.out.println("Total number of users is: " + clients.size());
     }
     
-    public void removeClient(clientHandler client) {
+    public void removeClient(ClientHandler client) {
         clients.remove(client);
         System.out.println("A user has left!");
         System.out.println("Total number of users is: " + clients.size());
