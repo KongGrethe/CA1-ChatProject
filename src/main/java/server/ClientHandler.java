@@ -36,21 +36,26 @@ public class ClientHandler extends Thread {
             input = new Scanner(socket.getInputStream());
             writer.println(server.getServerGreeting());
             message = "";
-            while (!message.equals("#EXIT#")) {
+            while (true) {
                 try {
                     message = input.nextLine(); // Blocker
                     String[] inputsFromClient = message.split(":");
                     
-                    switch (inputsFromClient[0].toUpperCase()){
+                    System.out.println("Command is " + inputsFromClient[0]);
+                    inputsFromClient[0] = inputsFromClient[0].toUpperCase();
+                    switch (inputsFromClient[0]) {
                         case "LOGIN":
                             setUserName(inputsFromClient[1]);
                             writer.println(server.getClientList());
                             break;
-                        case "MSG:":
+                        case "MSG":
                             String[] recipients = inputsFromClient[1].split(",");
+                            System.out.println("There are " + recipients.length + " recipients");
                             String text = inputsFromClient[2];
+                            System.out.println("The text is " + text);
                             if (recipients[0].equals("")) {
                                 // Send to all clients
+                                System.out.println("Send this to all clients");
                                 server.sendToAllClients(text, username);
                             } else {
                                 // Send to 1 or more clients
@@ -62,6 +67,7 @@ public class ClientHandler extends Thread {
                             socket.close();
                             break;
                         default:
+                            System.out.println("The command was ");
                             writer.println("Unknown command. Please reply with proper protocol"
                                     + "<\n Ex: MSG:<message>  LOGIN:<username>  LOGOUT: ");
                             break;
