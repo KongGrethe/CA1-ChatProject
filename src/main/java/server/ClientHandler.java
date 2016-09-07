@@ -22,14 +22,12 @@ public class ClientHandler extends Thread {
     private Scanner input;
     private String message;
     private Server server;
-    private boolean virgin;
     private String username;
     private String myName;
 
     public ClientHandler(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;
-        virgin = true;
     }
 
     @Override
@@ -87,12 +85,7 @@ public class ClientHandler extends Thread {
     }
 
     private void setUserName() {
-<<<<<<< HEAD
-        username = message = input.nextLine(); /*Undgår array out of bounds*/
-=======
         username = message = input.nextLine();
-        
->>>>>>> d506cbd384f4d3541ee78e3357e1a03a58373b90
     }
 
     public String getUserName() {
