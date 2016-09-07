@@ -24,6 +24,7 @@ public class ClientHandler extends Thread {
     private Server server;
     private boolean virgin;
     private String username;
+    private String myName;
 
     public ClientHandler(Socket socket, Server server) {
         this.socket = socket;
@@ -36,13 +37,11 @@ public class ClientHandler extends Thread {
         try {
             writer = new PrintWriter(socket.getOutputStream(), true);
             input = new Scanner(socket.getInputStream());
-            writer.println("Hi my name is Athena. What is your name?");
-
-            if (virgin) {
-                setUserName();
-            }
-            message = input.nextLine(); // Blocker
-            while (!message.equals("##STOP##")) {
+            writer.println(server.getServerGreeting());
+            setUserName();
+            writer.println(server.getSuccessMsg(username));
+            writer.println(server.getClientList());
+            while (!message.equals("#EXIT#")) {
                 try {
                     message = input.nextLine(); // Blocker
                     String[] parts = message.split(":");
@@ -59,11 +58,11 @@ public class ClientHandler extends Thread {
                     
                 } catch (ArrayIndexOutOfBoundsException ex) {
                     System.out.println(ex.getMessage());
-                    writer.println("The protocol is: <recipients>:<message> \n"
+                    writer.println("The protocol is: <recipients seperated by , or blank for all>:<message> \n"
                             + "Example: Lars,Jens,Mats:Hej med jer");
                 }
             }
-            writer.println("##STOP##");
+            writer.println("#EXIT#");
             socket.close();
             System.out.println("Closed connection");
         } catch (IOException e) {
@@ -88,11 +87,16 @@ public class ClientHandler extends Thread {
     }
 
     private void setUserName() {
-        username = input.nextLine();
+        username = message = input.nextLine();
+        
     }
 
     public String getUserName() {
         return username;
     }
-
+    
+    private String setMyName(){
+        myName = username;
+        return myName;
+    }
 }
