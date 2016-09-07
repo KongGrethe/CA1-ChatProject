@@ -35,7 +35,6 @@ public class ClientHandler extends Thread {
             writer = new PrintWriter(socket.getOutputStream(), true);
             input = new Scanner(socket.getInputStream());
             writer.println(server.getServerGreeting());
-            message = "";
             while (true) {
                 try {
                     message = processBackspace(input.nextLine()); // Blocker

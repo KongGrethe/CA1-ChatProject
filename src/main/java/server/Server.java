@@ -71,7 +71,7 @@ public class Server {
     //This method sends a message to all users online.
     public void sendToAllClients(String text, String from) {
         for (ClientHandler client : clients) {
-            client.sendMessage(from + "=" + text);
+            client.sendMessage("MSGRES:" + from + ":" + text);
         }
     }
 
@@ -81,7 +81,7 @@ public class Server {
         for (ClientHandler client : clients) {
             for (String receiver : receivers) {
                 if (client.getUserName().equals(receiver)) {
-                    client.sendMessage(from  +"=" + text);
+                    client.sendMessage("MSGRES:" + from + ":" + text);
                 }
             }
         }
@@ -99,9 +99,9 @@ public class Server {
     //This method extracts the list of online users and sends out the list
     //with a message.
     public String getClientList() {
-        String clientList = "The following users are online: ";
+        String clientList = "CLIENTLIST:";
         for (ClientHandler client : clients) {
-            clientList += client.getUserName() + ", ";
+            clientList += client.getUserName() + ",";
         }
         return clientList;
     }
