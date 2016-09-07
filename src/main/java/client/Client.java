@@ -6,6 +6,8 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Client {
 
@@ -22,8 +24,12 @@ public class Client {
         input = new Scanner(socket.getInputStream());
         output = new PrintWriter(socket.getOutputStream(), true);  //Set to true, to get auto flush behaviour
     }
-    
+
     public void WriteThis(String msg) {
-        
+        output.println(msg);
+    }
+    
+    public Scanner getInput() {
+        return input;
     }
 }
