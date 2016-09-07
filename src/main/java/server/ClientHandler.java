@@ -49,10 +49,10 @@ public class ClientHandler extends Thread {
                     
                     if (recipients[0].equals("")) {
                         // Send to all clients
-                        server.sendToAllClients(text);
+                        server.sendToAllClients(text, username);
                     } else {
                         // Send to 1 or more clients
-                        server.sendSpecific(recipients, text);
+                        server.sendSpecific(recipients, text, username);
                     }
                     
                 } catch (ArrayIndexOutOfBoundsException ex) {
@@ -86,7 +86,7 @@ public class ClientHandler extends Thread {
     }
 
     private void setUserName() {
-        username = message = input.nextLine();
+        username = message = input.nextLine(); /*Undgår array out of bounds*/
     }
 
     public String getUserName() {

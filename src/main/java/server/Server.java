@@ -70,17 +70,17 @@ public class Server {
         System.out.println("Total number of users is: " + clients.size());
     }
     
-    public void sendToAllClients(String text) {
+    public void sendToAllClients(String text, String from) {
         for (ClientHandler client : clients) {
-            client.sendMessage(text);
+            client.sendMessage(from + "=" + text);
         }
     }
     
-    public void sendSpecific(String[] receivers, String text){
+    public void sendSpecific(String[] receivers, String text, String from){
         for (ClientHandler client : clients) {
             for (String receiver : receivers) {
                 if (client.getUserName().equals(receiver)) {
-                    client.sendMessage(text);
+                    client.sendMessage(from  +"=" + text);
                 }
             }
         }
