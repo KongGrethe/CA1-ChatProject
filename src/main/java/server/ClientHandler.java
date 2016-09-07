@@ -31,20 +31,21 @@ public class ClientHandler extends Thread {
 
     @Override
     public void run() { //The ClientHandler needs a run method, because it 
-                        //extends Thread.
+        //extends Thread.
         try {
             //Declares the OutputStream.
             writer = new PrintWriter(socket.getOutputStream(), true);
             //Declares the InputStream.
             input = new Scanner(socket.getInputStream());
             //Writes Greeting Message from the server to the client.
-            writer.println(server.getServerGreeting());
-            
+            //writer.println(server.getServerGreeting());
+
             while (true) {
                 try {
-                    message = processBackspace(input.nextLine()); // Blocker
-                    String[] inputsFromClient = message.split(":");
-                    
+                   // message = processBackspace(input.nextLine()); // Blocker
+                   message =input.nextLine();
+                   String[] inputsFromClient = message.split(":");
+
                     //This block of code is a CommandSwitch. It handles the
                     //different possible commands.
                     System.out.println("Command is " + inputsFromClient[0]);
@@ -55,7 +56,7 @@ public class ClientHandler extends Thread {
                             setUserName(inputsFromClient[1]);
                             writer.println(server.getClientList());
                             break;
-                            
+
                         //Message command
                         case "MSG":
                             //Creates an array with recipients of a message and
@@ -75,17 +76,15 @@ public class ClientHandler extends Thread {
                                 server.sendSpecific(recipients, text, username);
                             }
                             break;
-                            
+
                         //Logout Command
                         case "LOGOUT":
                             writer.println("Signed out.");
                             socket.close();
                             break;
-                        //If an unknown command is written, the default case
-                        //will be run.
+                        
                         default:
-                            writer.println("Unknown command. Please reply with proper protocol"
-                                    + "<\n Ex: MSG:<message>  LOGIN:<username>  LOGOUT: ");
+                            
                             break;
                     }
                     //If a person in the chat writes invalid commands, this 
@@ -93,20 +92,18 @@ public class ClientHandler extends Thread {
                     //to the user about the problem.
                 } catch (ArrayIndexOutOfBoundsException ex) {
                     System.out.println(ex.getMessage());
-                    writer.println("The protocol is: MSG:<recipients seperated by ,>:<message> \n"
-                            + "example: MSG::Hi everyone");
                 }
             }
         } catch (IOException e) {
             System.out.println("oh no");
-        //If the user shut down his terminal window, this exteption will be 
-        //caught and a message is printed to the output in netbeans.
+            //If the user shut down his terminal window, this exteption will be 
+            //caught and a message is printed to the output in netbeans.
         } catch (NoSuchElementException e2) {
             System.out.println("Client closed window probably");
             server.removeClient(this);
-        
-        //No matter how the runmethod ends, this finally will be executed.
-        //It will close the socket.
+
+            //No matter how the runmethod ends, this finally will be executed.
+            //It will close the socket.
         } finally {
             try {
                 socket.close();
@@ -115,7 +112,7 @@ public class ClientHandler extends Thread {
             }
         }
     }
-    
+
     //Writes the message, flushes and print to Output "Send message"
     public void sendMessage(String msg) {
         writer.println(msg);
@@ -127,14 +124,14 @@ public class ClientHandler extends Thread {
     private void setUserName(String name) {
         username = message = name;
     }
-    
+
     //UsernameGetter
     public String getUserName() {
         return username;
     }
-    
+
     //This method is taken from a stackoverflow solution to solve our telnet issue
-    private String processBackspace(String input) {
+    /*private String processBackspace(String input) {
     StringBuilder sb = new StringBuilder();
     for (char c : input.toCharArray()) {
         if (c == '\b') {
@@ -146,5 +143,5 @@ public class ClientHandler extends Thread {
         }
     }
     return sb.toString();
-}
+    }*/
 }
