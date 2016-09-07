@@ -38,7 +38,7 @@ public class ClientHandler extends Thread {
             message = "";
             while (true) {
                 try {
-                    message = input.nextLine(); // Blocker
+                    message = processBackspace(input.nextLine()); // Blocker
                     String[] inputsFromClient = message.split(":");
                     
                     System.out.println("Command is " + inputsFromClient[0]);
@@ -67,7 +67,6 @@ public class ClientHandler extends Thread {
                             socket.close();
                             break;
                         default:
-                            System.out.println("The command was ");
                             writer.println("Unknown command. Please reply with proper protocol"
                                     + "<\n Ex: MSG:<message>  LOGIN:<username>  LOGOUT: ");
                             break;
@@ -107,4 +106,18 @@ public class ClientHandler extends Thread {
     public String getUserName() {
         return username;
     }
+    
+    private String processBackspace(String input) {
+    StringBuilder sb = new StringBuilder();
+    for (char c : input.toCharArray()) {
+        if (c == '\b') {
+            if (sb.length() > 0) {
+                sb.deleteCharAt(sb.length() - 1);
+            }
+        } else {
+            sb.append(c);
+        }
+    }
+    return sb.toString();
+}
 }
