@@ -106,6 +106,7 @@ public class ClientHandler extends Thread {
         return username;
     }
     
+    //This method is taken from a stackoverflow solution to solve our telnet issue
     private String processBackspace(String input) {
     StringBuilder sb = new StringBuilder();
     for (char c : input.toCharArray()) {
