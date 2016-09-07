@@ -24,6 +24,7 @@ public class ClientHandler extends Thread {
     private Server server;
     private boolean virgin;
     private String username;
+    private String myName;
 
     public ClientHandler(Socket socket, Server server) {
         this.socket = socket;
@@ -49,10 +50,10 @@ public class ClientHandler extends Thread {
                     
                     if (recipients[0].equals("")) {
                         // Send to all clients
-                        server.sendToAllClients(text);
+                        server.sendToAllClients(text, username);
                     } else {
                         // Send to 1 or more clients
-                        server.sendSpecific(recipients, text);
+                        server.sendSpecific(recipients, text, username);
                     }
                     
                 } catch (ArrayIndexOutOfBoundsException ex) {
@@ -86,11 +87,20 @@ public class ClientHandler extends Thread {
     }
 
     private void setUserName() {
+<<<<<<< HEAD
+        username = message = input.nextLine(); /*Undgår array out of bounds*/
+=======
         username = message = input.nextLine();
+        
+>>>>>>> d506cbd384f4d3541ee78e3357e1a03a58373b90
     }
 
     public String getUserName() {
         return username;
     }
     
+    private String setMyName(){
+        myName = username;
+        return myName;
+    }
 }

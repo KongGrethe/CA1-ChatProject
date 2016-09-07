@@ -22,7 +22,7 @@ public class Server {
             }
             String ip = args[0];
             int port = Integer.parseInt(args[1]);*/
-            new Server().runServer("localhost", 7777); // starter serveren
+            new Server().runServer("localhost", 7726); // starter serveren
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -56,30 +56,30 @@ public class Server {
             System.out.println(ex.getLocalizedMessage());
         }
     }
-
+    //This method adds client to list of clients.
     public void addClient(ClientHandler client) {
         clients.add(client);
         System.out.println("A user has joined!");
         System.out.println("Total number of users is: " + clients.size());
     }
-    
+    //This method removes client to list of clients.
     public void removeClient(ClientHandler client) {
         clients.remove(client);
         System.out.println("A user has left!");
         System.out.println("Total number of users is: " + clients.size());
     }
     
-    public void sendToAllClients(String text) {
+    public void sendToAllClients(String text, String from) {
         for (ClientHandler client : clients) {
-            client.sendMessage(text);
+            client.sendMessage(from + "=" + text);
         }
     }
     
-    public void sendSpecific(String[] receivers, String text){
+    public void sendSpecific(String[] receivers, String text, String from){
         for (ClientHandler client : clients) {
             for (String receiver : receivers) {
                 if (client.getUserName().equals(receiver)) {
-                    client.sendMessage(text);
+                    client.sendMessage(from  +"=" + text);
                 }
             }
         }
