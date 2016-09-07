@@ -23,7 +23,6 @@ public class ClientHandler extends Thread {
     private String message;
     private Server server;
     private String username;
-    private String myName;
 
     public ClientHandler(Socket socket, Server server) {
         this.socket = socket;
@@ -101,10 +100,5 @@ public class ClientHandler extends Thread {
 
     public String getUserName() {
         return username;
-    }
-
-    private String setMyName() {
-        myName = username;
-        return myName;
     }
 }
