@@ -22,14 +22,11 @@ public class ClientHandler extends Thread {
     private Scanner input;
     private String message;
     private Server server;
-    private boolean virgin;
     private String username;
-    private String myName;
 
     public ClientHandler(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;
-        virgin = true;
     }
 
     @Override
@@ -93,10 +90,5 @@ public class ClientHandler extends Thread {
 
     public String getUserName() {
         return username;
-    }
-    
-    private String setMyName(){
-        myName = username;
-        return myName;
     }
 }
