@@ -22,7 +22,7 @@ public class Server {
             }
             String ip = args[0];
             int port = Integer.parseInt(args[1]);*/
-            new Server().runServer("localhost", 7726); // starter serveren
+            new Server().runServer("localhost", 7777); // starter serveren
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -86,7 +86,7 @@ public class Server {
     }
     
     public String getServerGreeting() {
-        return "Hi my name is " + serverName + ". What is your name?";
+        return "Hi my name is " + serverName + ". Welcome. Please LOGIN:";
     }
     
     public String getSuccessMsg(String toUser) {

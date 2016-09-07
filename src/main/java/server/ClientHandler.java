@@ -36,33 +36,44 @@ public class ClientHandler extends Thread {
             writer = new PrintWriter(socket.getOutputStream(), true);
             input = new Scanner(socket.getInputStream());
             writer.println(server.getServerGreeting());
-            setUserName();
-            writer.println(server.getSuccessMsg(username));
-            writer.println(server.getClientList());
+            message = "";
             while (!message.equals("#EXIT#")) {
                 try {
                     message = input.nextLine(); // Blocker
-                    String[] parts = message.split(":");
-                    String[] recipients = parts[0].split(",");
-                    String text = parts[1];
+                    String[] inputsFromClient = message.split(":");
                     
-                    if (recipients[0].equals("")) {
-                        // Send to all clients
-                        server.sendToAllClients(text, username);
-                    } else {
-                        // Send to 1 or more clients
-                        server.sendSpecific(recipients, text, username);
+                    switch (inputsFromClient[0].toUpperCase()){
+                        case "LOGIN":
+                            setUserName(inputsFromClient[1]);
+                            writer.println(server.getClientList());
+                            break;
+                        case "MSG:":
+                            String[] recipients = inputsFromClient[1].split(",");
+                            String text = inputsFromClient[2];
+                            if (recipients[0].equals("")) {
+                                // Send to all clients
+                                server.sendToAllClients(text, username);
+                            } else {
+                                // Send to 1 or more clients
+                                server.sendSpecific(recipients, text, username);
+                            }
+                            break;
+                        case "LOGOUT":
+                            writer.println("Signed out.");
+                            socket.close();
+                            break;
+                        default:
+                            writer.println("Unknown command. Please reply with proper protocol"
+                                    + "<\n Ex: MSG:<message>  LOGIN:<username>  LOGOUT: ");
+                            break;
                     }
-                    
+
                 } catch (ArrayIndexOutOfBoundsException ex) {
                     System.out.println(ex.getMessage());
-                    writer.println("The protocol is: <recipients seperated by , or blank for all>:<message> \n"
-                            + "Example: Lars,Jens,Mats:Hej med jer");
+                    writer.println("The protocol is: MSG:<recipients seperated by ,>:<message> \n"
+                            + "example: MSG::Hi everyone");
                 }
             }
-            writer.println("#EXIT#");
-            socket.close();
-            System.out.println("Closed connection");
         } catch (IOException e) {
             System.out.println("oh no");
         } catch (NoSuchElementException e2) {
@@ -84,15 +95,15 @@ public class ClientHandler extends Thread {
         System.out.println("Send message!");
     }
 
-    private void setUserName() {
-        username = message = input.nextLine();
+    private void setUserName(String name) {
+        username = message = name;
     }
 
     public String getUserName() {
         return username;
     }
-    
-    private String setMyName(){
+
+    private String setMyName() {
         myName = username;
         return myName;
     }
