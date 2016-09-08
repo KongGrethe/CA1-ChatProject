@@ -38,7 +38,6 @@ public class Server {
             //While the server is running the code below runs.
             while (keepRunning) {
                 Socket socket = serverSocket.accept();
-                System.out.println("Connected to a client");
 
                 ClientHandler cH = new ClientHandler(socket, this);
                 addClient(cH);
