@@ -54,7 +54,7 @@ public class ClientHandler extends Thread {
                         //Login command
                         case "LOGIN":
                             setUserName(inputsFromClient[1]);
-                            writer.println(server.getClientList());
+                            server.notifyServer();
                             break;
 
                         //Message command
@@ -80,7 +80,9 @@ public class ClientHandler extends Thread {
                         //Logout Command
                         case "LOGOUT":
                             writer.println("Signed out.");
+                            //server.notifyServer();
                             socket.close();
+                            server.notifyServer();
                             break;
                         
                         default:
@@ -101,7 +103,7 @@ public class ClientHandler extends Thread {
         } catch (NoSuchElementException e2) {
             System.out.println("Client closed window probably");
             server.removeClient(this);
-
+            server.notifyServer();
             //No matter how the runmethod ends, this finally will be executed.
             //It will close the socket.
         } finally {

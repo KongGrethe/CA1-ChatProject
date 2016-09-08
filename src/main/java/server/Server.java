@@ -16,7 +16,7 @@ public class Server {
 
     public static void main(String[] args) {
         try {
-            new Server().runServer("localhost", 1239); // starter serveren
+            new Server().runServer("localhost", 7777); // starter serveren
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -117,5 +117,15 @@ public class Server {
         }
         clientList += clients.get(clients.size()-1).getUserName();
         return clientList;
+    }
+    
+    public void notifyServer() {
+        updateAndSendClientList();
+    }
+    
+    private void updateAndSendClientList() {
+        for (ClientHandler client : clients) {
+            client.sendMessage(getClientList());
+        }
     }
 }
