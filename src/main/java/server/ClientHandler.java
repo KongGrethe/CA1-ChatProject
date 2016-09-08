@@ -54,7 +54,6 @@ public class ClientHandler extends Thread {
 
                     //This block of code is a CommandSwitch. It handles the
                     //different possible commands.
-                    System.out.println("Command is " + inputsFromClient[0]);
                     inputsFromClient[0] = inputsFromClient[0].toUpperCase();
                     switch (inputsFromClient[0]) {
                         //Login command
@@ -68,14 +67,11 @@ public class ClientHandler extends Thread {
                             //Creates an array with recipients of a message and
                             //split the names with a ",".
                             String[] recipients = inputsFromClient[1].split(",");
-                            System.out.println("There are " + recipients.length + " recipients");
                             //Creates a String called text. 
                             String text = inputsFromClient[2];
-                            System.out.println("The text is " + text);
                             //If no recipients are given, the message is sent to
                             //all online users on the server.
                             if (recipients[0].equals("")) {
-                                System.out.println("Send this to all clients");
                                 server.sendToAllClients(text, username);
                             } else {
                                 // Send to 1 or more clients
@@ -117,7 +113,6 @@ public class ClientHandler extends Thread {
             LOGGER.log(Level.SEVERE, e2.getMessage());
             
             
-            System.out.println("Client closed window probably");
             server.removeClient(this);
             server.notifyServer();
             
@@ -132,7 +127,6 @@ public class ClientHandler extends Thread {
                 socket.close();
             } catch (IOException ex) {
                 LOGGER.log(Level.SEVERE, ex.getMessage());
-                System.out.println("Deep shit");
                 
                 if(fileHandler != null) fileHandler.close();
                 fileHandler = null;
@@ -144,7 +138,6 @@ public class ClientHandler extends Thread {
     public void sendMessage(String msg) {
         writer.println(msg);
         writer.flush();
-        System.out.println("Send message!");
     }
 
     //UsernameSette.
