@@ -1,0 +1,78 @@
+More detailed commits and contributions to the code:
+
+1.
+Michael first made a Client.java, Log.java and a Server.java inside the webpages.
+
+2.
+Christian added these java classes to specific packages suited for them.
+
+3.
+Patrick refactored these packages names to lowercase and then moved the Log class to it's own package, since it wasn't before.
+
+4.
+Lasse added the first servercode inside the server class, where code to the main class were added for the server to run. A stopServer method, a runServer methode and a handleClient were added.
+
+5.
+Patrick refactored the class names inside the Client class, the Log class and the Server class to begin with uppercase.
+
+6.
+Lasse got the telnet on the pc to work with a runServer command which listens on our localhost server.
+
+7.
+Lasse made the handleClient class where he made multithreadification of it. HandleClient extends a Thread it has a constructor with a socket and a run method where it runs the Thread.
+The clienthandler Thread is started inside the server class.
+
+8.
+Patrick made a clienthandler Arraylist inside the server class called Clients. Clients are added inside the while loop "keepRunning". An addClient and a removeClient method were added in the server class for us to both add and remove a client.
+
+9.
+Christian got the clients to either be added or removed from the Clients arraylist when a client joins or leaves the chat room. When that action is performed it writes it out on the output console.
+
+10.
+Michael made a sendMessage method, added two String[] one with the name parts which splits ":" and one with the name recipients which spilts "," on parts[0]. Added a String text for parts[1]. Made a sendToAllClients method and a work in progress method called sendSpecific inside the ClientHandler class.
+
+11.
+Patrick made it possible, in the ClientHandler class, to send a message with a specific syntax inside a try catch to one or more users. Added a setUserName and a getUserName method.
+Have made it possible to send to a specific person inside the sendSpecific method.
+Modified an error message when typing in the wrong syntax, wasn't set to be separated by "," or blank for all.
+Removed the nextLine double block in the ClientHandler class and changed the way the server greeting is called with a getServerGreeting method and a getSuccessMsg method.
+
+12.
+Patrick added a method to print out all connected clients which is called getClientList.
+
+13.
+Christian added some comments to the code and deleted some unsused imports, basically he cleaned it up a bit.
+
+14.
+Patrick implemented the protocol for the client in a switch case with the "LOGIN", "MSG" and the "LOGOUT" commands.
+Edited the server replies to follow the protocol with the "MSGRES" command.
+
+15.
+Lasse inserted some code for fixing backspace character issues, so that if you delete the text it fucks it all up, with a method called processBackspace.
+
+16.
+Michael made a clientGUI called NewJFrame, made an InputThread class and a main class which connects with the server and the clienthandler and writes out the protocol on our GUI.
+Made the client able to connect with the clientGUI.
+
+17.
+Christian deleted the servergreeting since it wasn't needed. Fixed the clientlist, it had some comma problems. Deleted a wrong errormessage in the switch case and the catch inside the ClientHandler class. Fixed stringbuilder.
+
+18.
+Patrick removed some unnecessary sout messages. Implemented a clientlist that is sent to all connected users when a user logs on and a user logs off. Made the index.html with css styling and some jsps.
+Removed the software jsp and then added the chat client.jar.
+Modified the client program and made the new client program runnable.
+Added a web.xml with basic authentication and moved the documentation jsp, with appropiate modifications, to index.html.
+
+19.
+Lasse made startup parameters where you go from the command line and open a jar file.
+Have made logging for both the server class and the ClientHandler class.
+
+20.
+Removed an unnecessary class which is Server2. Server2 were just a test class for trying something out.
+
+21.
+Michael made a Test Package containing a server folder with a test class called ServerTest. Made three tests inside the ServerTest class.
+
+22.
+Patrick fixed a problem with the tests which made the program unable to run.
+Added some more jUnit tests which tests that we stick to the protocol, for example: Login, Logout, send message and receive message.
