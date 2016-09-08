@@ -31,7 +31,15 @@ Input is treated differently based on what it contains. The text LOGIN assigns t
 By keeping track of a clientlist, the server can figure out how to forward a message to only certain users.<p>
 <br>
         <div>Diagram 2: <br> <img src="diagram2.jpg"/></div>
+        <p>This diagram describes that multible clients can connect to a server 
+           and each of these clients gets their own ClientHandler which then will 
+           process the input/out streams, which means it process what is being send and received.</p><br>
         <div>Diagram 3: <br> <img src="diagram3.jpg"/></div>
+        <p>This diagram describes more specificly what happens in Diagram 2.
+A client connects to the server where the client then gets his own ClientHandler 
+for processing input/output streams. This client then gets added with a ClientThread 
+which makes sure that only he can use this Thread and that he can write, via our protocol, 
+to other clients with another unique Thread added to them.</p><br>
         <form action="../index.html">
             <input type="submit" value="back">
         </form>
