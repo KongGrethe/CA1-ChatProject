@@ -12,6 +12,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Documentation page for chat project</h1>
+        <p>link to github source code: <a href="https://www.github.com/konggrethe/ca1-chatproject"</p>
+        <p>For documentation on who contributed to what <a href="">Click here</a>
     </body>
 </html>
