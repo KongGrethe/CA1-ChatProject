@@ -46,7 +46,10 @@ public class Server {
         myIP = ip;
         myPort = port;
 
-        try {            
+        try {
+            fileHandler = new FileHandler("ServerLog.xml", true);
+            LOGGER.addHandler(fileHandler);
+            
             //Creates new socket 
             serverSocket = new ServerSocket();
             //
@@ -66,6 +69,9 @@ public class Server {
             }
         } catch (IOException ex) {
             System.out.println(ex.getLocalizedMessage());
+            LOGGER.log(Level.SEVERE, ex.getMessage());
+            if(fileHandler != null) fileHandler.close();
+            fileHandler = null;
         }
     }
 
