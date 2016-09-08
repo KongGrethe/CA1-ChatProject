@@ -8,7 +8,6 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class Client {
-
     Socket socket;
     private int port;
     private InetAddress serverAddress;

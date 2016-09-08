@@ -5,9 +5,16 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Server {
-
+    
+    private static final Logger LOGGER = Logger.getLogger(Server.class.getName());
+    private static Handler fileHandler = null;
+    
     private static boolean keepRunning = true;
     private static ServerSocket serverSocket;
     private String myIP;
@@ -15,11 +22,22 @@ public class Server {
     private ArrayList<ClientHandler> clients = new ArrayList<>();
 
     public static void main(String[] args) {
+        if(args.length != 2) {
+            throw new IllegalArgumentException("Error: Use like: java -jar EchoServer.jar <ip> <port>");
+        }
+        
+             
         try {
-            new Server().runServer("localhost", 7777); // starter serveren
-
+            fileHandler = new FileHandler("ServerLog.xml", true);
+            LOGGER.addHandler(fileHandler);
+            
+            new Server().runServer(args[0], Integer.parseInt(args[1])); // starter serveren
+            
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            LOGGER.log(Level.SEVERE, e.getMessage());
+            if(fileHandler != null) fileHandler.close();
+            fileHandler = null;
+            //System.out.println(e.getMessage());
         }
     }
 
@@ -28,7 +46,7 @@ public class Server {
         myIP = ip;
         myPort = port;
 
-        try {
+        try {            
             //Creates new socket 
             serverSocket = new ServerSocket();
             //

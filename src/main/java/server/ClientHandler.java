@@ -5,11 +5,14 @@
  */
 package server;
 
+import java.util.logging.Logger;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.logging.Handler;
+import java.util.logging.Level;
 
 /**
  *
@@ -17,6 +20,9 @@ import java.util.Scanner;
  */
 public class ClientHandler extends Thread {
 
+    private final Logger LOGGER = Logger.getLogger(ClientHandler.class.getName());
+    private Handler fileHandler = null;
+    
     private Socket socket;
     private PrintWriter writer;
     private Scanner input;
@@ -93,24 +99,43 @@ public class ClientHandler extends Thread {
                     //catch block will handle the exception and write a message 
                     //to the user about the problem.
                 } catch (ArrayIndexOutOfBoundsException ex) {
-                    System.out.println(ex.getMessage());
+                    LOGGER.log(Level.SEVERE, ex.getMessage());
+                    if(fileHandler != null) fileHandler.close();
+                    fileHandler = null;
+                    //System.out.println(ex.getMessage());
                 }
             }
         } catch (IOException e) {
-            System.out.println("oh no");
+            LOGGER.log(Level.SEVERE, e.getMessage());
+            if(fileHandler != null) fileHandler.close();
+            fileHandler = null;
+            
+            //System.out.println("oh no");
             //If the user shut down his terminal window, this exteption will be 
             //caught and a message is printed to the output in netbeans.
         } catch (NoSuchElementException e2) {
+            LOGGER.log(Level.SEVERE, e2.getMessage());
+            
+            
             System.out.println("Client closed window probably");
             server.removeClient(this);
             server.notifyServer();
+            
+            if(fileHandler != null) fileHandler.close();
+            fileHandler = null;
+            
+            
             //No matter how the runmethod ends, this finally will be executed.
             //It will close the socket.
         } finally {
             try {
                 socket.close();
             } catch (IOException ex) {
+                LOGGER.log(Level.SEVERE, ex.getMessage());
                 System.out.println("Deep shit");
+                
+                if(fileHandler != null) fileHandler.close();
+                fileHandler = null;
             }
         }
     }
