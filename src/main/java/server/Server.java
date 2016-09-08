@@ -34,10 +34,12 @@ public class Server {
             //
             serverSocket.bind(new InetSocketAddress(myIP, myPort));
 
+            System.out.println("Server listens on " + myPort + " at " + myIP);
 
             //While the server is running the code below runs.
             while (keepRunning) {
                 Socket socket = serverSocket.accept();
+                System.out.println("Connected to a client");
 
                 ClientHandler cH = new ClientHandler(socket, this);
                 addClient(cH);
@@ -57,11 +59,15 @@ public class Server {
     //This method adds client to list of clients.
     public void addClient(ClientHandler client) {
         clients.add(client);
+        System.out.println("A user has joined!");
+        System.out.println("Total number of users is: " + clients.size());
     }
 
     //This method removes client to list of clients.
     public void removeClient(ClientHandler client) {
         clients.remove(client);
+        System.out.println("A user has left!");
+        System.out.println("Total number of users is: " + clients.size());
     }
 
     //This method sends a message to all users online.
