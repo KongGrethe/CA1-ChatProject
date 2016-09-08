@@ -26,10 +26,15 @@
         <br>
         <h1>Design:</h1>
         <div>Diagram 1: <br> <img src="diagram1.jpg"/></div>
+		<p>A user connects through a socket to the server. On the server, a thread is spawned to take care of input and output to the user. Such a thread can take the input from one user and turn it into output to everyone else.
+Input is treated differently based on what it contains. The text LOGIN assigns the user a temporary name. MSG indicates a message that can be to anyone, and LOGOUT disconnects the user as well as informing everyone else that the list of users changed.
+By keeping track of a clientlist, the server can figure out how to forward a message to only certain users.<p>
+<br>
         <div>Diagram 2: <br> <img src="diagram2.jpg"/></div>
         <div>Diagram 3: <br> <img src="diagram3.jpg"/></div>
         <form action="../index.html">
             <input type="submit" value="back">
         </form>
+		
     </body>
 </html>
